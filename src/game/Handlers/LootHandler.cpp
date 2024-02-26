@@ -293,7 +293,8 @@ void WorldSession::HandleLootMoneyOpcode(WorldPacket& /*recv_data*/)
         }
         // Used by Eluna
 #ifdef ENABLE_ELUNA
-        sEluna->OnLootMoney(player, pLoot->gold);
+        if (Eluna* e = player->GetEluna())
+            e->OnLootMoney(player, pLoot->gold);
 #endif /* ENABLE_ELUNA */
 
         pLoot->gold = 0;
@@ -706,7 +707,8 @@ void WorldSession::HandleLootMasterGiveOpcode(WorldPacket& recv_data)
 
     // Used by Eluna
 #ifdef ENABLE_ELUNA
-    	sEluna->OnLootItem(target, newitem, item.count, lootGuid);
+        if (Eluna* e = target->GetEluna())
+            e->OnLootItem(target, newitem, item.count, lootGuid);
 #endif /* ENABLE_ELUNA */
 
     }
